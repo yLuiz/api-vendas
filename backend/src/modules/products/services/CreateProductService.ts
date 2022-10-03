@@ -2,17 +2,12 @@ import AppError from '@shared/errors/AppError';
 import { ProductRepository } from './../typeorm/repositories/ProductsRepository';
 import { getCustomRepository } from "typeorm";
 import Product from '../typeorm/entities/Product';
+import IResponse from '../../interfaces/IResponse'
 
 interface IRequest {
   name: string;
   price: number;
   quantity: number;
-}
-
-interface IResponse<T> {
-  status: number;
-  message: string;
-  data: T;
 }
 
 export default class CreateProductService {

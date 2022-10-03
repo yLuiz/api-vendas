@@ -2,12 +2,7 @@ import AppError from '@shared/errors/AppError';
 import { ProductRepository } from './../typeorm/repositories/ProductsRepository';
 import { getCustomRepository } from "typeorm";
 import Product from '../typeorm/entities/Product';
-
-interface IResponse<T> {
-  status: number;
-  message: string;
-  data: T;
-}
+import IResponse from '../../interfaces/IResponse'
 
 export default class ListProductService {
   public async execute(): Promise<IResponse<Product[]>> {

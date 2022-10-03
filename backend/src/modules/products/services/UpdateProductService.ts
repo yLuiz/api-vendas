@@ -2,6 +2,7 @@ import AppError from '@shared/errors/AppError';
 import { ProductRepository } from './../typeorm/repositories/ProductsRepository';
 import { getCustomRepository } from "typeorm";
 import Product from '../typeorm/entities/Product';
+import IResponse from '../../interfaces/IResponse'
 
 interface IRequest {
   id: string;
@@ -10,11 +11,6 @@ interface IRequest {
   quantity: number;
 }
 
-interface IResponse<T> {
-  status: number;
-  message: string;
-  data: T;
-}
 
 export default class UpdateProductService {
   public async execute({ id, name, price, quantity }: IRequest): Promise<IResponse<Product | undefined>> {
