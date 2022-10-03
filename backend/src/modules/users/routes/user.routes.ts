@@ -34,17 +34,6 @@ userRouter.post(
   UsersController.create
 );
 
-userRouter.post(
-  '/login',
-  celebrate({
-    [Segments.BODY]: {
-      email: Joi.string().required(),
-      password: Joi.string().required()
-    }
-  }),
-  UsersController.createSessions
-);
-
 userRouter.put(
   '/:id',
   celebrate({

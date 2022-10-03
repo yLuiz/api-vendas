@@ -49,12 +49,4 @@ export default class UserController{
 
     return response.json(deletedUser);
   }
-
-  public async createSessions(request: Request, response: Response): Promise<Response> {
-    const createSessionsUserService = new CreateSessionsService();
-    const { email, password } = request.body;
-
-    const session = await createSessionsUserService.execute({ email, password });
-    return response.json(session);
-  }
 }
