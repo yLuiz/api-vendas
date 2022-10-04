@@ -34,6 +34,5 @@ export default class CreateUserService {
       message: 'User Created successfully',
       data: newUser
     }
-
   }
 }

@@ -1,17 +1,26 @@
 import 'reflect-metadata';
-import AppError from "@shared/errors/AppError";
-import { NextFunction, Request, Response } from "express";
 import 'express-async-errors';
-import routes from "./routes";
 import '@shared/typeorm/index';
-import { errors } from 'celebrate';
 
-const express = require('express');
+import routes from "./routes";
+import uploadConfig from '@cofing/upload';
+import AppError from "@shared/errors/AppError";
+
+import { errors } from 'celebrate';
+import { NextFunction, Request, Response } from "express";
+
+import cors from 'cors';
+// const cors = require('cors');
+
+import express from 'express';
+// const express = require('express');
+
+
 const app = express();
-const cors = require('cors');
 
 app.use(cors());
 app.use(express.json());
+app.use('/files', express.static(uploadConfig.directory));
 app.use(routes);
 
 app.use(errors());

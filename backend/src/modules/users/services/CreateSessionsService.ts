@@ -1,8 +1,10 @@
 import AppError from "@shared/errors/AppError";
 import bcrypt from "bcryptjs";
+import { sign } from "jsonwebtoken";
 import { getCustomRepository } from "typeorm";
 import User from "../typeorm/entities/User";
 import { UserRepository } from "../typeorm/repositories/UsersRepository";
+import authConfig from '@cofing/auth';
 
 interface IRequest {
   email: string;
@@ -16,7 +18,7 @@ interface ITokenResponse {
 
 
 export default class CreateSessionsService {
-  public async execute({ email, password }: IRequest): Promise<User> {
+  public async execute({ email, password }: IRequest): Promise<ITokenResponse> {
     
     const userRepository = getCustomRepository(UserRepository);
     const user = await userRepository.findByEmail(email);
@@ -28,9 +30,16 @@ export default class CreateSessionsService {
     if(!isCorrectPassword) {
       throw new AppError("Incorrect Credentials!", 401);
     }
-
     const userRetorno: any = { ...user, password: undefined };
+
+    const token = sign({}, authConfig.jwt.secretKey, {
+      subject: user.id,
+      expiresIn: authConfig.jwt.expiresIn
+    });
     
-    return userRetorno;
+    return {
+      user: userRetorno,
+      token
+    };
   }
 }

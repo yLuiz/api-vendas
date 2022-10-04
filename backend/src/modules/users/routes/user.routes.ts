@@ -1,13 +1,21 @@
 import { celebrate, Segments, Joi } from 'celebrate';
+import multer from 'multer';
+import uploadConfig from '@cofing/upload';
 import { Router } from 'express';
 import UserController from '../controllers/UserController';
+import isAuthenticated from '../../../shared/http/middlewares/isAuthenticated';
+import UserAvatarController from '../controllers/UserAvatarController';
 
 const userRouter = Router();
-const UsersController = new UserController();
+const usersController = new UserController();
+const usersAvatarController = new UserAvatarController();
+
+const upload = multer(uploadConfig);
 
 userRouter.get(
   '/',
-  UsersController.index
+  isAuthenticated,
+  usersController.index
 );
 
 
@@ -18,7 +26,8 @@ userRouter.get(
       id: Joi.string().uuid().required()
     }
   }),
-  UsersController.show
+  isAuthenticated,
+  usersController.show
 );
 
 userRouter.post(
@@ -31,7 +40,7 @@ userRouter.post(
       avatar: Joi.string()
     }
   }),
-  UsersController.create
+  usersController.create
 );
 
 userRouter.put(
@@ -49,8 +58,15 @@ userRouter.put(
       avatar: Joi.string()
     }
   }),
-  UsersController.update
+  usersController.update
 );
+
+userRouter.patch(
+  '/avatar', 
+  isAuthenticated,
+  upload.single('avatar'),
+  usersAvatarController.update
+)
 
 userRouter.delete(
   '/:id',
@@ -59,7 +75,7 @@ userRouter.delete(
       id: Joi.string().uuid().required()
     }
   }),
-  UsersController.delete
+  usersController.delete
 );
 
 export default userRouter;

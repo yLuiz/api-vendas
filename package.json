@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "celebrate": "^15.0.1"
-  },
-  "devDependencies": {
-    "@types/joi": "^17.2.3"
-  }
-}
