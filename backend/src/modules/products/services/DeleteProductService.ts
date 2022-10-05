@@ -2,7 +2,7 @@ import AppError from '@shared/errors/AppError';
 import { ProductRepository } from './../typeorm/repositories/ProductsRepository';
 import { getCustomRepository } from "typeorm";
 import Product from '../typeorm/entities/Product';
-import IResponse from '../../interfaces/IResponse'
+import IResponse from '../../../interfaces/IResponse'
 
 export default class DeleteProductService {
   // The promise response could be 'void' instead of 'IResponse<Product>'

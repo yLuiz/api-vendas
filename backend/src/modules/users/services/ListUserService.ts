@@ -3,7 +3,7 @@ import { object } from "joi";
 import { UserRepository } from "../typeorm/repositories/UsersRepository";
 import { getCustomRepository} from "typeorm";
 import User from "../typeorm/entities/User";
-import IResponse from '../../interfaces/IResponse'
+import IResponse from '../../../interfaces/IResponse'
 
 export default class ListUserService {
   public async execute(): Promise<IResponse<User[]>>{

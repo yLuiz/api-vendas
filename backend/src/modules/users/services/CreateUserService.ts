@@ -2,7 +2,7 @@ import AppError from "@shared/errors/AppError";
 import { UserRepository } from "../typeorm/repositories/UsersRepository";
 import User from "../typeorm/entities/User";
 import { getCustomRepository } from "typeorm";
-import IResponse from '../../interfaces/IResponse'
+import IResponse from '../../../interfaces/IResponse'
 import bcrypt from "bcryptjs";
 
 interface IRequest {

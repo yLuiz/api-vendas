@@ -1,7 +1,7 @@
 import AppError from "@shared/errors/AppError";
 import { getCustomRepository } from "typeorm";
 import { UserRepository } from "../typeorm/repositories/UsersRepository";
-import IResponse from '../../interfaces/IResponse';
+import IResponse from '../../../interfaces/IResponse';
 import User from "../typeorm/entities/User";
 
 export default class ShowUserService {

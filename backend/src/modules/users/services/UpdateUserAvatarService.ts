@@ -1,4 +1,4 @@
-import IResponse from "@modules/interfaces/IResponse";
+import IResponse from "src/interfaces/IResponse";
 import AppError from "@shared/errors/AppError";
 import { getCustomRepository } from "typeorm";
 import User from "../typeorm/entities/User";
