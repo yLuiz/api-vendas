@@ -1,9 +1,8 @@
 import AppError from "@shared/errors/AppError";
-import { object } from "joi";
-import { UserRepository } from "../typeorm/repositories/UsersRepository";
-import { getCustomRepository} from "typeorm";
+import { getCustomRepository } from "typeorm";
+import IResponse from '../../../interfaces/IResponse';
 import User from "../typeorm/entities/User";
-import IResponse from '../../../interfaces/IResponse'
+import { UserRepository } from "../typeorm/repositories/UsersRepository";
 
 export default class ListUserService {
   public async execute(): Promise<IResponse<User[]>>{

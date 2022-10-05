@@ -3,9 +3,7 @@ import CreateUserService from "../services/CreateUserService";
 import ListUserService from "../services/ListUserService";
 import ShowUserService from "../services/ShowUserService";
 import DeleteUserService from "../services/DeleteUserService";
-import UpdateUserService from "../services/UpdateUserService";
-import CreateSessionsService from "../services/CreateSessionsService";
-
+import UpdateProfileService from "../services/UpdateProfileService";
 
 export default class UserController{
   public async index(request: Request, response: Response):Promise<Response> {
@@ -29,16 +27,6 @@ export default class UserController{
     const newUser = await createUserService.execute({name, email, password});
 
     return response.json(newUser);
-  }
-
-  public async update(request: Request, response: Response): Promise<Response> {
-
-    const updateUserService = new UpdateUserService();
-    const { id } = request.params;
-    const { name, email, password } = request.body;
-    const updateUser = await updateUserService.execute({id, name, email, password});
-
-    return response.json(updateUser);
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {

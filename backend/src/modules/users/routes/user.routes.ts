@@ -1,10 +1,10 @@
-import { celebrate, Segments, Joi } from 'celebrate';
-import multer from 'multer';
 import uploadConfig from '@cofing/upload';
+import { celebrate, Joi, Segments } from 'celebrate';
 import { Router } from 'express';
-import UserController from '../controllers/UserController';
+import multer from 'multer';
 import isAuthenticated from '../../../shared/http/middlewares/isAuthenticated';
 import UserAvatarController from '../controllers/UserAvatarController';
+import UserController from '../controllers/UserController';
 
 const userRouter = Router();
 const usersController = new UserController();
@@ -41,24 +41,6 @@ userRouter.post(
     }
   }),
   usersController.create
-);
-
-userRouter.put(
-  '/:id',
-  celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.string().uuid().required()
-    }
-  }),
-  celebrate({
-    [Segments.BODY]: {
-      name: Joi.string().required(),
-      email: Joi.string().required(),
-      password: Joi.string().required(),
-      avatar: Joi.string()
-    }
-  }),
-  usersController.update
 );
 
 userRouter.patch(
