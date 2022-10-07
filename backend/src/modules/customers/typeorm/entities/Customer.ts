@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import Order from "@modules/orders/typeorm/entities/Order";
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('customers')
 export default class Customer {
@@ -10,6 +11,9 @@ export default class Customer {
 
   @Column()
   email: string;
+
+  @OneToMany(type => Customer, customer => customer.orders)
+  orders: Order[];
 
   @CreateDateColumn()
   created_at: Date;
