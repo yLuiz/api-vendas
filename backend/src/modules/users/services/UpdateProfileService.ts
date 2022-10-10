@@ -49,12 +49,10 @@ export default class UpdateProfileService {
 
     await userRepository.save(user);
 
-    const retorno: any = {...user, password: undefined};
-
     return {
       status: 200,
       message: 'User updated successfully',
-      data: retorno
+      data: user
     }
   }
 }

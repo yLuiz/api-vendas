@@ -1,20 +1,23 @@
+import AppError from "@shared/errors/AppError";
+import { instanceToInstance } from 'class-transformer';
 import { Request, Response } from "express";
-import IResponse from "src/interfaces/IResponse";
 import DeleteUserService from "../services/DeleteUserService";
 import ShowProfileService from "../services/ShowProfileService";
 import UpdateProfileService from "../services/UpdateProfileService";
+
 export default class ProfileController{
 
   public async show(request: Request, response: Response): Promise<Response>{
-    const user_id = request.user.id;
+    try {
+      const user_id = request.user.id;
     
-    const showProfile = new ShowProfileService();
-    const user = await showProfile.execute({ user_id });
+      const showProfile = new ShowProfileService();
+      const user = await showProfile.execute({ user_id });
 
-    let userRetorno: IResponse<any> = {...user};
-    userRetorno.data.password = undefined;
-
-    return response.json(user);
+      return response.json(instanceToInstance(user));
+    } catch (error: any) {
+      throw new AppError(error.message, 500);
+    }
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -30,7 +33,7 @@ export default class ProfileController{
       old_password
     });
 
-    return response.json(updateUser);
+    return response.json(instanceToInstance(updateUser));
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
