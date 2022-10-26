@@ -3,6 +3,7 @@ import { ProductRepository } from './../typeorm/repositories/ProductsRepository'
 import { getCustomRepository } from "typeorm";
 import Product from '../typeorm/entities/Product';
 import IResponse from '../../../interfaces/IResponse'
+import RedisCache from '@shared/cache/RedisCache';
 
 interface IRequest {
   name: string;
@@ -13,6 +14,7 @@ interface IRequest {
 export default class CreateProductService {
   public async execute({ name, price, quantity }: IRequest): Promise<IResponse<Product>> {
     const productsRepository = getCustomRepository(ProductRepository);
+    const redisCache = new RedisCache();
 
     const productExists = await productsRepository.findByName(name);
     if (productExists) {
@@ -25,6 +27,8 @@ export default class CreateProductService {
       quantity
     });
 
+    // For each product created, updated or deleted is nessary to delete the existing cache.
+    await redisCache.invalidate('api-vendas-PRODUCT_LIST');
     await productsRepository.save(newProduct);
 
     return {

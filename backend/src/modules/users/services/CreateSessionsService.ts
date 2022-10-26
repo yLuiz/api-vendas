@@ -31,8 +31,10 @@ export default class CreateSessionsService {
       throw new AppError("Incorrect Credentials!", 401);
     }
     const userRetorno: any = { ...user, password: undefined };
+    const secretKey: any = authConfig.jwt.secretKey;
 
-    const token = sign({}, authConfig.jwt.secretKey, {
+
+    const token = sign({}, secretKey, {
       subject: user.id,
       expiresIn: authConfig.jwt.expiresIn
     });

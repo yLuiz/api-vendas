@@ -8,7 +8,7 @@ import uploadConfig from '@cofing/upload';
 import AppError from "@shared/errors/AppError";
 
 import { errors } from 'celebrate';
-import { application, NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { pagination } from 'typeorm-pagination';
 
 import cors from 'cors';
