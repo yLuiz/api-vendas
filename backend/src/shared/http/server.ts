@@ -6,6 +6,7 @@ import '@shared/typeorm/index';
 import routes from "./routes";
 import uploadConfig from '@cofing/upload';
 import AppError from "@shared/errors/AppError";
+import rateLimiter from './middlewares/raterLimiter';
 
 import { errors } from 'celebrate';
 import { NextFunction, Request, Response } from "express";
@@ -18,6 +19,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(rateLimiter);
 
 app.use(pagination);
 app.use('/files', express.static(uploadConfig.directory));
