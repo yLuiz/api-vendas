@@ -6,6 +6,10 @@ import { UserRepository } from "../typeorm/repositories/UsersRepository";
 import path from "path";
 import uploadConfig from "@cofing/upload";
 import fs from 'fs';
+import DiskStorageProvider from "@shared/providers/StorageProvider/DiskStorageProvider";
+
+
+// Erro para atualizar avatar.
 
 interface IRequest {
   userId: string;
@@ -15,22 +19,20 @@ interface IRequest {
 export default class UpdateUserAvatarService {
   public async execute({ userId, avatarFilename }: IRequest): Promise<IResponse<User>> {
     const userRepository = getCustomRepository(UserRepository);
+    const storageProvider = new DiskStorageProvider();
+
     const user = await userRepository.findById(userId);
 
     if(!user) {
-      throw new AppError(`User ${userId} not found!`, 404);
+      throw new AppError(`User not found!`, 404);
     }
 
     if(user.avatar) {
-      const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
-      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
-
-      if(userAvatarFileExists) {
-        await fs.promises.unlink(userAvatarFilePath);
-      }
+      await storageProvider.deleteFile(user.avatar);
     }
 
-    user.avatar = avatarFilename;
+    const fileName = await storageProvider.saveFile(avatarFilename);
+    user.avatar = fileName;
 
     await userRepository.save(user);
 

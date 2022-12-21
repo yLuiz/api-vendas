@@ -19,7 +19,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(rateLimiter);
+// app.use(rateLimiter);
 
 app.use(pagination);
 app.use('/files', express.static(uploadConfig.directory));
@@ -34,6 +34,8 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
       message: error.message,
     });
   }
+
+  console.log(error);
 
   return res.status(500).json({
     status: 500,
